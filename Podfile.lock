@@ -1,0 +1,20 @@
+PODS:
+  - FlashUI (0.5.1)
+  - SnapKit (5.0.1)
+
+DEPENDENCIES:
+  - FlashUI (~> 0.5.1)
+  - SnapKit (~> 5.0.0)
+
+SPEC REPOS:
+  trunk:
+    - FlashUI
+    - SnapKit
+
+SPEC CHECKSUMS:
+  FlashUI: d0beed568716550d786eb0532b3c33969011dc9e
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+
+PODFILE CHECKSUM: 25fc3d77a98fce47849eb31c06d93aebee567c71
+
+COCOAPODS: 1.8.4
