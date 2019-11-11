@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
   
   let activityHeight: CGFloat = 34
+  private var currentLoadCount: Int = 0
   
   private weak var tableView: UITableView!
   
@@ -48,7 +49,6 @@ class ViewController: UIViewController {
   }
   
   @objc private func sendMessage() {
-    scrollToTop()
     messages.insert("new message", at: 0)
     tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .top)
   }
@@ -76,22 +76,26 @@ class ViewController: UIViewController {
       array.append("older" * i)
     }
     array.reverse()
-    messages.append(contentsOf: array)
-    tableView.reloadData()
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+      self.messages.append(contentsOf: array)
+      self.tableView.reloadData()
+    }
   }
   
   @objc private func scrollToTop() {
-    
+    UIStatusBarManager().statusBarFrame.height
     tableView.setContentOffset(CGPoint(x: 0, y: 0 - UIApplication.shared.statusBarFrame.height), animated: false)
   }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    print(scrollView.contentOffset.y)
     let height = scrollView.contentSize.height - scrollView.bounds.height
-    if (scrollView.contentOffset.y - height) <= activityHeight {
-//      loadOlderMessages()
+    print(scrollView.contentOffset.y - height, activityHeight)
+    guard currentLoadCount != messages.count else { return }
+    if (scrollView.contentOffset.y - height) >= 0 {
+      currentLoadCount = messages.count
+      loadOlderMessages()
     }
   }
   
