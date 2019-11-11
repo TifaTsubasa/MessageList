@@ -18,12 +18,21 @@ class MyTableViewCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     render()
     contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+    accessoryView?.transform = CGAffineTransform(scaleX: 1, y: -1)
+  }
+
+  override func willTransition(to state: UITableViewCell.StateMask) {
+    super.willTransition(to: state)
   }
   
+  override func didTransition(to state: UITableViewCell.StateMask) {
+    super.didTransition(to: state)
+  }
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     render()
+    accessoryType = .detailButton
   }
   
   private func render() {

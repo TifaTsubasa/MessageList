@@ -109,6 +109,20 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     cell.contentLabel.text = messages[indexPath.row]
     return cell
   }
+  
+  func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+    for subview in tableView.subviews {
+      if subview.description.hasPrefix("<_UITableViewCellSwipeContainerView") {
+        guard let swipeView = subview.subviews.first(where: { !($0 is MyTableViewCell )}) else { continue }
+        if swipeView.transform.d == -1 { continue }
+        swipeView.transform = CGAffineTransform(scaleX: 1, y: -1)
+      }
+    }
+  }
+  
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    
+  }
 }
 
 extension String {
