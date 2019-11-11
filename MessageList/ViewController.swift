@@ -83,8 +83,8 @@ class ViewController: UIViewController {
   }
   
   @objc private func scrollToTop() {
-    UIStatusBarManager().statusBarFrame.height
-    tableView.setContentOffset(CGPoint(x: 0, y: 0 - UIApplication.shared.statusBarFrame.height), animated: false)
+    let statusBarHeight = UIApplication.shared.windows.first?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+    tableView.setContentOffset(CGPoint(x: 0, y: 0 - statusBarHeight), animated: false)
   }
 }
 
